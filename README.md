@@ -22,6 +22,7 @@ Klientas galės:
 4.	Redaguoti automobilį
 5.	Pašalinti automobilį
 6.	Patvirtinti automobilio perdavimą servisui
+7.  Peržiūrėti automobilio įrašus
 
 Serviso darbuotojas galės:
 
@@ -46,9 +47,10 @@ Sistemos administratorius galės:
 9.	Redaguoti naudotoją
 10.	Pašalinti naudotoją
 11.	Peržiūrėti automobilių sąrašą
-12.	Peržiūrėti automobilį
-13.	Redaguoti automobilį
-14.	Pašalinti automobilį.
+12. Sukurti automobilį
+13. Peržiūrėti automobilį
+14. Redaguoti automobilį
+15. Pašalinti automobilį
 
 ## Sistemos architektūra
 Sistemos pagrindinės dalys:
