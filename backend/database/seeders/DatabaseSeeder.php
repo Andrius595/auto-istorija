@@ -29,14 +29,21 @@ class DatabaseSeeder extends Seeder
 
         $permissions = PermissionsConfig::SYSTEM_ADMIN_PERMISSIONS;
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
-
         $systemAdmin->syncPermissions($permissions);
 
-        $client->syncPermissions(PermissionsConfig::CLIENT_PERMISSIONS);
-        $serviceEmployee->syncPermissions(PermissionsConfig::SERVICE_EMPLOYEE_PERMISSIONS);
-        $serviceAdmin->syncPermissions(PermissionsConfig::SERVICE_ADMIN_PERMISSIONS);
+        $permissions = PermissionsConfig::CLIENT_PERMISSIONS;
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+        $client->syncPermissions($permissions);
+
+        $permissions = PermissionsConfig::SERVICE_EMPLOYEE_PERMISSIONS;
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
+        }
+        $serviceEmployee->syncPermissions($permissions);
 
 
         $service = Service::create([

@@ -10,9 +10,22 @@ class PermissionsConfig {
     ];
 
     public const CLIENT_PERMISSIONS = [
-
+        ...self::CARS_PERMISSIONS,
+        self::CAN_LIST_APPOINTMENTS,
+        self::CAN_VIEW_APPOINTMENT,
+        self::CAN_CREATE_APPOINTMENT,
+        self::CAN_LIST_SERVICES,
+        self::CAN_VIEW_SERVICE,
+        self::CAN_LIST_RECORDS,
+        self::CAN_VIEW_RECORD,
     ];
-    public const SERVICE_EMPLOYEE_PERMISSIONS = [];
+    public const SERVICE_EMPLOYEE_PERMISSIONS = [
+        ...self::CARS_PERMISSIONS,
+        ...self::APPOINTMENTS_PERMISSIONS,
+        self::CAN_LIST_SERVICES,
+        self::CAN_VIEW_SERVICE,
+        ...self::RECORDS_PERMISSIONS,
+    ];
     public const SERVICE_ADMIN_PERMISSIONS = [];
     public const SYSTEM_ADMIN_PERMISSIONS = [
         ...self::USERS_PERMISSIONS,
