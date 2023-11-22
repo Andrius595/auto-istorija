@@ -43,11 +43,27 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'first_name' => 'Test',
             'last_name' => 'User',
-            'email' => 'asd@asd.asd',
+            'email' => 'client@example.com',
+        ]);
+
+        $user->assignRole($client);
+
+        $seUser = User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Service Employee',
+            'email' => 'employee@example.com',
             'service_id' => $service->id,
         ]);
 
-        $user->assignRole($systemAdmin);
+        $seUser->assignRole($serviceEmployee);
+
+        $saUser = User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'Service Admin',
+            'email' => 'admin@example.com',
+        ]);
+
+        $saUser->assignRole($serviceAdmin);
 
         $car = Car::create([
             'make' => 'Volvo',
