@@ -34,6 +34,10 @@ class DatabaseSeeder extends Seeder
 
         $systemAdmin->syncPermissions($permissions);
 
+        $client->syncPermissions(PermissionsConfig::CLIENT_PERMISSIONS);
+        $serviceEmployee->syncPermissions(PermissionsConfig::SERVICE_EMPLOYEE_PERMISSIONS);
+        $serviceAdmin->syncPermissions(PermissionsConfig::SERVICE_ADMIN_PERMISSIONS);
+
 
         $service = Service::create([
             'title' => 'Test Service',
