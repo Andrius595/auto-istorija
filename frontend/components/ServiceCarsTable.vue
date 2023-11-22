@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VDataTableServer
+    <v-data-table-server
         v-model:items-per-page="itemsPerPage"
         :headers="headers"
         :items-length="totalItems"
@@ -17,13 +17,12 @@
           <v-icon icon="mdi-check-circle" @click="completeAppointment(item.id)"/>
         </div>
       </template>
-    </VDataTableServer>
+    </v-data-table-server>
     <AppointmentRecordsModal :value="showRecordsModal" :appointment-id="actionItemId" />
   </div>
 </template>
 
 <script setup lang="ts">
-import {VDataTableServer} from "vuetify/labs/VDataTable";
 import {PaginatedResponse} from "#build/types/Responses";
 import {Car} from "#build/types/Car";
 

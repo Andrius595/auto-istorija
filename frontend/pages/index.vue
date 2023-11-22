@@ -1,9 +1,12 @@
 <template>
   <div>
-    {{ data }}
   </div>
 </template>
 
 <script setup lang="ts">
-const { status, data, getSession } = useAuth()
+import {definePageMeta} from "#imports";
+
+definePageMeta({
+  middleware: ['auth'],
+})
 </script>

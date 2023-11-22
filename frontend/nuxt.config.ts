@@ -1,25 +1,32 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify, { transformAssetUrls} from "vite-plugin-vuetify";
 export default defineNuxtConfig({
-  devtools: { enabled: true },
-  // ssr: true,
+  devtools: {enabled: true},
+  ssr: false,
+  build: {
+    transpile: ['vuetify'],
+  },
   modules: [
-    '@invictus.codes/nuxt-vuetify',
-    '@sidebase/nuxt-auth'
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({autoImport: true}))
+      })
+    },
   ],
-  auth: {
-    // baseURL: 'http://localhost/api',
-    // provider: {
-    //   type: 'local',
-    //   endpoints: {
-    //     signIn: { path: '/auth/login', method: 'post' },
-    //     signOut: { path: '/auth/logout', method: 'post' },
-    //     signUp: { path: '/auth/register', method: 'post' },
-    //     getSession: { path: '/auth/user', method: 'get' }
-    //   },
-    //   sessionDataType: { id: 'number', email: 'string', first_name: 'string', last_name: 'string', roles: 'string[]', service_id: 'number|null', permissions: 'string[]', created_at: 'string|null', updated_at: 'string|null' },
-    // },
-    globalAppMiddleware: {
-      isEnabled: true
+  vite: {
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  },
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+    public: {
+      apiURL: process.env.BACKEND_API_URL || 'http://localhost/api',
+      jwtTTL: ((process.env.JWT_TTL as number|undefined) || 60) * 60,
+      jwtRefreshTTL: ((process.env.JWT_REFRESH_TTL as number|undefined) || 60*24*7) * 60,
     }
   }
 })
