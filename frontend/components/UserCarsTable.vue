@@ -1,19 +1,19 @@
 <template>
-  <VDataTableServer
-      v-model:items-per-page="itemsPerPage"
-      :headers="headers"
-      :items-length="totalItems"
-      :items="serverItems"
-      :loading="loading"
-      class="elevation-1"
-      item-value="name"
-      @update:options="loadItems"
-  />
+  <div>
+    <v-data-table-server
+        v-model:items-per-page="itemsPerPage"
+        :headers="headers"
+        :items-length="totalItems"
+        :items="serverItems"
+        :loading="loading"
+        class="elevation-1"
+        item-value="name"
+        @update:options="loadItems"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import {VDataTableServer} from "vuetify/labs/VDataTable";
-
 const props = defineProps({
   userId: {
     type: Number,

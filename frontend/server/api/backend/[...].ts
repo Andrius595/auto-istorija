@@ -4,18 +4,16 @@ import {$fetch} from "ofetch";
 export default defineEventHandler(async (event: H3Event) => {
     const options = await readBody(event)
 
-    const t = getCookie(event, 'auth:token')
-    console.log('coooook', t)
-
+    const t = getCookie(event, 'token')
 
     const url = getRequestURL(event)
 
-    const path = url.pathname.replace('/api/backend/', '')
+    const path = url.pathname.replace('/api/backend/', '/')
 
     options.headers = {
         Accept: 'application/json',
         Authorization: 'Bearer ' + t
     }
 
-    return await $fetch('http://localhost/api/' + path, options)
+    return await $fetch(useRuntimeConfig().public.apiURL + path, options)
 })

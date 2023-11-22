@@ -5,7 +5,9 @@ use App\Actions\Appointment\DeleteAppointment;
 use App\Actions\Appointment\ListAppointments;
 use App\Actions\Appointment\Records\CreateAppointmentRecord;
 use App\Actions\Appointment\Records\ListAppointmentRecords;
+use App\Actions\Auth\RefreshToken;
 use App\Actions\Auth\UserLogin;
+use App\Actions\Auth\UserLogout;
 use App\Actions\Auth\UserSession;
 use App\Actions\Car\CreateCar;
 use App\Actions\Car\DeleteCar;
@@ -59,7 +61,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => '/auth', 'middleware' => 'api'], static function() {
     Route::post('/login', UserLogin::class)->name('login');
+    Route::post('/refresh', RefreshToken::class)->name('refresh');
+
+});
+
+Route::group(['prefix' => '/auth', 'middleware' => ['api', 'auth:api']], static function() {
     Route::get('/user', UserSession::class);
+    Route::post('/logout', UserLogout::class)->name('logout');
 });
 
 Route::group(['middleware' => ['api', 'auth:api']], static function() {

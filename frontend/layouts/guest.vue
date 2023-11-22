@@ -1,12 +1,5 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-navigation-drawer>
-      <v-list-item class="text-center mt-2"><h1>CarHorizontal</h1></v-list-item>
-      <NavigationList />
-    </v-navigation-drawer>
-
-    <v-app-bar title="Application bar"></v-app-bar>
-
     <v-main class="d-flex align-center justify-center w-full" style="min-height: 300px">
       <slot />
     </v-main>

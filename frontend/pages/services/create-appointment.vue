@@ -46,8 +46,6 @@
 import {_AsyncData} from "nuxt/dist/app/composables/asyncData";
 import {GetCarByVinResponse} from "~/types/Responses";
 
-const auth = useAuth()
-
 const vin = ref('')
 const make = ref('')
 const model = ref('')
@@ -78,15 +76,14 @@ async function checkVin() {
 }
 
 async function createAppointment() {
-  console.log(auth.data)
-  const { data } = await backFetch('/services/'+auth.data.value?.service_id+'/appointments', {
-    method: 'POST',
-    body: {
-      car_id: carId.value,
-      make: make.value,
-      model: model.value,
-      vin: vin.value,
-    }
-  })
+  // const { data } = await backFetch('/services/'+auth.data.value?.service_id+'/appointments', {
+  //   method: 'POST',
+  //   body: {
+  //     car_id: carId.value,
+  //     make: make.value,
+  //     model: model.value,
+  //     vin: vin.value,
+  //   }
+  // })
 }
 </script>
