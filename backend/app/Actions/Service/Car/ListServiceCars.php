@@ -48,6 +48,8 @@ class ListServiceCars
             'page' => 'required|int|min:1',
             'make' => 'nullable|string',
             'model' => 'nullable|string',
+            'vin' => 'nullable|string',
+            'owner' => 'nullable|string',
         ];
     }
 }

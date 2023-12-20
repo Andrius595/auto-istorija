@@ -52,7 +52,7 @@ class CreateServiceAppointment
     {
         return [
             'car_id' => 'nullable|exists:cars,id',
-            'vin' => 'required|string',
+            'vin' => 'required_without:car_id|string',
             'make' => 'required_without:car_id|string',
             'model' => 'required_without:car_id|string',
         ];

@@ -36,9 +36,12 @@ class ListUsers
         return $query->paginate($perPage);
     }
 
+
     public function asController(ActionRequest $request): JsonResponse
     {
         $searchParams = $request->only(['first_name', 'last_name', 'email', 'service_title', 'role_name']);
+
+
 
         return response()->json($this->handle($request->get('perPage', 10), $searchParams));
     }

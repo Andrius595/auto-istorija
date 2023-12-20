@@ -27,6 +27,7 @@ class ListUserCars
         $searchParams = $request->only([
             'make',
             'model',
+            'vin'
         ]);
 
         return response()->json(
@@ -48,6 +49,7 @@ class ListUserCars
             'page' => 'required|int|min:1',
             'make' => 'nullable|string',
             'model' => 'nullable|string',
+            'vin' => 'nullable|string',
         ];
     }
 }

@@ -45,8 +45,6 @@ class CreateCar
             'make' => 'required|string',
             'model' => 'required|string',
             'year_of_manufacture' => 'required|date_format:Y|before_or_equal:now', // TODO not sure if 'now' is working...
-//            'color' => 'required|string',
-//            'plate_no' => 'required|string',
             'vin' => 'required|string', // TODO additional validation
             'owner_id' => 'sometimes|exists:users,id'
         ];

@@ -41,8 +41,6 @@ class CreateUserCar
             'make' => 'required|string',
             'model' => 'required|string',
             'year_of_manufacture' => 'required|date_format:Y|before_or_equal:now',
-//            'color' => 'required|string',
-//            'plate_no' => 'required|string',
             'vin' => 'required|string|unique:cars', // TODO additional validation
         ];
     }

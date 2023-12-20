@@ -37,9 +37,6 @@ class CompleteServiceAppointment
     {
         return [
             'car_id' => 'nullable|exists:cars,id',
-            'make' => 'required_without:car_id|string',
-            'model' => 'required_without:car_id|string',
-            'vin' => 'required_without:car_id|string',
         ];
     }
 }

@@ -17,16 +17,16 @@ class UserLogin
 
     public function asController(ActionRequest $request): JsonResponse
     {
-       $token = $this->handle(
+        $token = $this->handle(
            $request->get('email'),
            $request->get('password')
-       );
+        );
 
-       if (!$token) {
+        if (!$token) {
            return response()->json(['error' => 'Unauthorized'], 401);
-       }
+        }
 
-       return response()->json(['token' => $token]);
+        return response()->json(['token' => $token]);
     }
 
 
