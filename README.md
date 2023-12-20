@@ -59,3 +59,47 @@ Sistemos pagrindinės dalys:
 <p>Sistemos visumą sudarančios dalys (kliento ir serverio) talpinamos atskiruose serveriuose, kurios bendrauja tarpusavyje HTTP protokolu per 8080 prievadą. Sistemos naudotojas gali kreiptis tik į kliento dalį HTTP protokolu per 80 prievadą. O duomenų bazę pasiekti gali tik serverinė dalis MYSQL protokolu per 3306 prievadą.</p>
 
 ![Deployment diagrama](./deployment.png "Deployment diagrama")
+
+## API routes dokumentacija
+[Postman dokumentacija su pavyzdžiais](https://documenter.getpostman.com/view/29924563/2s9Ykq71MW)
+
+## Wireframes
+Puslapio struktūros wireframe:
+![Puslapio struktūros wireframe](./page_layout_wireframe.png "Puslapio struktūros wireframe")
+
+Lentelės wireframe:
+![Lentelės wireframe](./table_wireframe.png "Lentelės wireframe")
+
+Automobilio redagavimo modalo wireframe:
+![Automobilio redagavimo modalo wireframe](./desktop_modal_wireframe.png "Automobilio redagavimo modalo wireframe")
+
+Automobilio redagavimo modalo wireframe (mobiliajame telefone):
+![Automobilio redagavimo modalo wireframe (mobiliajame telefone)](./mobile_modal_wireframe.png "Automobilio redagavimo modalo wireframe (mobiliajame telefone)")
+
+## Sistemos nuotraukos
+Prisijungimo puslapis:
+![Prisijungimo puslapis](./login.png "Prisijungimo puslapis")
+
+Kuriamas automobilio vizitas (automobilis yra sistemoje):
+![Kuriamas automobilio vizitas](./create_appointment_car_found.png "Kuriamas automobilio vizitas")
+
+Kuriamas automobilio vizitas (automobilio nėra sistemoje):
+![Kuriamas automobilio vizitas](./create_appointment_car_not_found.png "Kuriamas automobilio vizitas")
+
+Automobilių sąrašas:
+![Automobilių sąrašas](./cars_list.png "Automobilių sąrašas")
+
+Sukurti automobilį modalas:
+![Sukurti automobilį modalas](./create_car_modal.png "Sukurti automobilį modalas")
+
+Sukurti automobilį modalas su klaidomis:
+![Sukurti automobilį modalas su klaidomis](./create_car_modal_validation.png "Sukurti automobilį modalas su klaidomis")
+
+Redaguoti automobilį modalas:
+![Redaguoti automobilį modalas](./edit_car_modal.png "Redaguoti automobilį modalas")
+
+Redaguoti automobilį modalas mobiliajame telefone:
+![Redaguoti automobilį modalas mobiliajame telefone](./edit_car_modal_mobile.png "Redaguoti automobilį modalas mobiliajame telefone")
+
+Navigacija mobiliajame telefone:
+![Navigacija mobiliajame telefone](./mobile_navigation.png "Navigacija mobiliajame telefone")
