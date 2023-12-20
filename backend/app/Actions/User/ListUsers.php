@@ -45,7 +45,7 @@ class ListUsers
 
     public function authorize(ActionRequest $request): bool
     {
-        return $request->user()->hasPermissionTo(PermissionsConfig::CAN_LIST_CARS);
+        return $request->user()->hasPermissionTo(PermissionsConfig::CAN_LIST_USERS);
     }
 
     public function rules(): array

@@ -76,6 +76,14 @@ class DatabaseSeeder extends Seeder
 
         $saUser->assignRole($serviceAdmin);
 
+        $systemAdminUser = User::factory()->create([
+            'first_name' => 'Test',
+            'last_name' => 'System Admin',
+            'email' => 'system@example.com',
+        ]);
+
+        $systemAdminUser->assignRole($systemAdmin);
+
         $car = Car::create([
             'make' => 'Volvo',
             'model' => 'V60',
@@ -113,7 +121,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Service::factory(10)->create();
-        User::factory(10)->create();
+        $users = User::factory(10)->create();
         Car::factory(10)->create();
+
+        foreach ($users as $user) {
+            $user->assignRole($client);
+        }
     }
 }

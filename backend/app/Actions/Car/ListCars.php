@@ -13,7 +13,7 @@ class ListCars
 {
     use AsAction;
 
-    public function handle(int $perPage, array $searchParams = [], $relations = []): LengthAwarePaginator
+    public function handle(int $perPage, array $searchParams = [], $relations = [], $sortParams = []): LengthAwarePaginator
     {
         $query = Car::query();
 
@@ -35,6 +35,14 @@ class ListCars
             };
         }
 
+        if (!empty($sortParams)) {
+            match ($sortParams['sortBy']) {
+                'owner' => $query->join('users', 'cars.owner_id', '=', 'users.id')
+                    ->orderBy('users.first_name', $sortParams['sortDirection']),
+                default => $query->orderBy($sortParams['sortBy'], $sortParams['sortDirection']),
+            };
+        }
+
         return $query->paginate($perPage);
     }
 
@@ -48,7 +56,12 @@ class ListCars
             'model',
         ]);
 
-        return response()->json($this->handle($request->get('perPage', 10), $searchParams));
+        $sortParams = $request->only([
+            'sortBy',
+            'sortDirection',
+        ]);
+
+        return response()->json($this->handle($request->get('perPage', 10), $searchParams, ['owner'], $sortParams));
     }
 
     public function authorize(ActionRequest $request): bool
@@ -66,6 +79,8 @@ class ListCars
             'owner_id' => 'nullable|string',
             'service_id' => 'nullable|string',
             'owner_first_name' => 'nullable|string',
+            'sortBy' => 'nullable|string',
+            'sortDirection' => 'nullable|string|in:asc,desc',
         ];
     }
 }

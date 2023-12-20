@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100">
+  <v-container>
     <h1>Create appointment</h1>
     <v-row>
       <v-col cols="12">
@@ -10,14 +10,16 @@
             hide-details
         ></v-text-field>
       </v-col>
-      <v-btn @click="checkVin">Check VIN</v-btn>
     </v-row>
-    <v-row v-if="checkPerformed">
+    <v-btn color="primary" class="mt-4" @click="checkVin">Check VIN</v-btn>
+    <template v-if="checkPerformed">
+    <v-divider class="my-4" />
+    <v-row >
       <v-col cols="12">
-        <span v-if="!carWasFound">Car is not registered in the system. Please, register enter it's make and model manually.</span>
-        <span v-else>Car was found in the system. Please, make sure data below is correct.</span>
+        <v-alert type="success" v-if="carWasFound">Car was found in the system. Please, make sure data below is correct.</v-alert>
+        <v-alert type="error" v-else>Car is not registered in the system. Please, enter it's make and model manually.</v-alert>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <v-text-field
             v-model="make"
             label="Make"
@@ -26,7 +28,7 @@
             :disabled="carWasFound"
         ></v-text-field>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <v-text-field
             v-model="model"
             label="Model"
@@ -35,16 +37,22 @@
             :disabled="carWasFound"
         ></v-text-field>
       </v-col>
-      <v-btn @click="createAppointment">Create appointment</v-btn>
     </v-row>
+    <v-btn color="primary" class="mt-4" @click="createAppointment">Create appointment</v-btn>
+    </template>
 
-  </div>
+
+  </v-container>
 </template>
 
 <script setup lang="ts">
-
-import {_AsyncData} from "nuxt/dist/app/composables/asyncData";
 import {GetCarByVinResponse} from "~/types/Responses";
+import {errorToast, successToast} from "~/utils/toast";
+import {definePageMeta} from "#imports";
+
+const auth = useAuth()
+
+const user = await auth.getUser()
 
 const vin = ref('')
 const make = ref('')
@@ -62,12 +70,12 @@ function resetSearch() {
 
 async function checkVin() {
   resetSearch()
-  const { data }: _AsyncData<GetCarByVinResponse, any> = await backFetch('/cars/vin/'+vin.value, {
-    method: 'GET',
+  const { data } = await backFetch<GetCarByVinResponse>('/cars/vin/'+vin.value, {
+    method: 'get',
   })
   checkPerformed.value = true
 
-  if ('id' in data.value) {
+  if (data.value && 'id' in data.value) {
     carWasFound.value = true
     carId.value = data.value.id
     make.value = data.value.make
@@ -76,14 +84,26 @@ async function checkVin() {
 }
 
 async function createAppointment() {
-  // const { data } = await backFetch('/services/'+auth.data.value?.service_id+'/appointments', {
-  //   method: 'POST',
-  //   body: {
-  //     car_id: carId.value,
-  //     make: make.value,
-  //     model: model.value,
-  //     vin: vin.value,
-  //   }
-  // })
+  const { data, error } = await backFetch('/services/'+user.service_id+'/appointments', {
+    method: 'post',
+    body: {
+      car_id: carId.value,
+      make: make.value,
+      model: model.value,
+      vin: vin.value,
+    }
+  })
+
+  if (error.value) {
+    errorToast(error.value.data.message)
+    console.error(error.value)
+    return
+  }
+
+  successToast('Appointment created successfully!')
 }
+
+definePageMeta({
+  middleware: ['auth', 'service-employee']
+})
 </script>

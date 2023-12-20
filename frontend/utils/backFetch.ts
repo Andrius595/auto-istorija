@@ -1,45 +1,31 @@
 import {type AsyncData, type UseFetchOptions} from "nuxt/app";
-import type {NavigationFailure, RouteLocationRaw} from "vue-router";
+import {FetchError} from "ofetch";
+import {AvailableRouterMethod, NitroFetchRequest} from "nitropack";
+import {KeysOf, PickFrom} from "#app/composables/asyncData";
 
-export default async (route: string, options: UseFetchOptions<any>): Promise<AsyncData<any, any>|Promise<void | NavigationFailure | false> | false | void | RouteLocationRaw> => {
+export default async <DataT>(
+    route: string,
+    options: UseFetchOptions<
+        DataT extends void ? unknown : DataT,
+        DataT extends void ? unknown : DataT,
+        KeysOf<DataT extends void ? unknown : DataT>,
+        null,
+        NitroFetchRequest,
+        DataT extends void ? "get" : AvailableRouterMethod<NitroFetchRequest>>
+): Promise<AsyncData<PickFrom<DataT extends void ? unknown : DataT, KeysOf<DataT extends void ? unknown : DataT>>|null,FetchError|null>> =>
+{
     const jwt = useJWT()
 
-    let token = useCookie('token').value
-    console.log('token value', token)
-    if (token) {
-        const t = jwt.decodeToken(token)
-        console.log('decoded', t)
-        console.log('token present', token)
-        if (jwt.isTokenExpired(token)) {
-            console.log('token expired')
-            if (jwt.isTokenRefreshable(token)) {
-                console.log('token refreshable')
-                const refreshed = await jwt.refresh(token)
-                console.log('refreshed', refreshed)
-                if (!refreshed) {
-                    jwt.setToken('')
-                    return navigateTo('/login');
-                }
-            } else {
-                console.log('token not refreshable')
-                jwt.setToken('')
+    let token = await jwt.getToken()
 
-                return navigateTo('/login');
-            }
-        }
-        token = useCookie('token').value
+    if (!token) {
+        await navigateTo('/login');
     }
-
 
     options.headers = {
         ...options.headers,
         Authorization: 'Bearer ' + token
     }
 
-
-    const response = useFetch(useRuntimeConfig().public.apiURL + route, options)
-
-    // console.log('response', response)
-
-    return response
+    return useFetch<DataT, FetchError>(useRuntimeConfig().public.apiURL + route, options)
 }

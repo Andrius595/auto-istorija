@@ -1,8 +1,8 @@
 import {jwtDecode, type JwtPayload} from "jwt-decode";
-import backFetch from "~/utils/backFetch";
+import {type JwtData} from "~/types/JWT";
 
 export const useJWT = () => {
-    const getToken = () => {
+    const get = () => {
         return useCookie('token').value
     }
 
@@ -12,8 +12,8 @@ export const useJWT = () => {
         tokenCookie.value = token
     }
 
-    const decodeToken = (token: string): JwtPayload => {
-        return jwtDecode(token);
+    const decodeToken = (token: string): JwtData => {
+        return <JwtData>jwtDecode(token);
     }
 
     const isTokenExpired = (token: string) => {
@@ -34,11 +34,41 @@ export const useJWT = () => {
             body: { token }
         })
 
-        console.log('refresh JWT', data, data.value)
         setToken(data.value as string)
 
         return data.value
     }
 
-    return { getToken, setToken, isTokenExpired, isTokenRefreshable, refresh, decodeToken }
+    const getToken = async () => {
+        let token = get()
+        if (token) {
+            if (isTokenExpired(token)) {
+                if (isTokenRefreshable(token)) {
+                    const refreshed = await refresh(token)
+                    if (!refreshed) {
+                        setToken('')
+                        return null;
+                    }
+                } else {
+                    setToken('')
+
+                    return null;
+                }
+            }
+        }
+
+        return get()
+    }
+
+    const getTokenData = async (): Promise<JwtData|null> => {
+        const token = await getToken()
+
+        if (!token) {
+            return null
+        }
+
+        return decodeToken(token)
+    }
+
+    return { getToken, setToken, isTokenExpired, isTokenRefreshable, refresh, decodeToken, getTokenData }
 }
