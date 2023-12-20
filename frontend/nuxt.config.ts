@@ -4,9 +4,10 @@ export default defineNuxtConfig({
   devtools: {enabled: true},
   ssr: false,
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', 'vue-sonner'],
   },
   modules: [
+    '@nuxtjs/google-fonts',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -14,6 +15,11 @@ export default defineNuxtConfig({
       })
     },
   ],
+  googleFonts: {
+    families: {
+      Afacad: true,
+    }
+  },
   vite: {
     vue: {
       template: {

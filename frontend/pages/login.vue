@@ -1,32 +1,36 @@
 <template>
-  <v-form v-model="valid" style="width: 100%" @submit.prevent="login">
-    <v-container>
-      <v-row>
-        <v-col
-            cols="12"
-        >
-          <v-text-field
-              v-model="email"
-              label="E-mail"
-              hide-details
-              required
-          ></v-text-field>
-        </v-col>
-        <v-col
-            cols="12"
-        >
-          <v-text-field
-              v-model="password"
-              :counter="10"
-              label="Password"
-              hide-details
-              required
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-btn type="submit">Login</v-btn>
-    </v-container>
-  </v-form>
+  <v-container class="d-flex flex-column justify-center align-center flex-grow-1">
+      <h1 class="mb-4 site-name text-h2 text-primary">CarHorizontal</h1>
+      <v-form v-model="valid" style="width: 50%" @submit.prevent="login">
+        <div>
+          <v-row>
+            <v-col
+                cols="12"
+            >
+              <v-text-field
+                  v-model="email"
+                  label="E-mail"
+                  hide-details
+                  required
+              ></v-text-field>
+            </v-col>
+            <v-col
+                cols="12"
+            >
+              <v-text-field
+                  v-model="password"
+                  type="password"
+                  :counter="10"
+                  label="Password"
+                  hide-details
+                  required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-btn type="submit" class="mt-4" color="primary">Login</v-btn>
+        </div>
+      </v-form>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +41,7 @@ const password = ref('')
 
 definePageMeta({
   layout: 'guest',
+  middleware: ['guest'],
 })
 
 async function login() {
@@ -60,3 +65,10 @@ async function login() {
   }
 }
 </script>
+
+<style scoped>
+.site-name {
+  font-family: Afacad, Helvetica, sans-serif;
+  font-weight: 500
+}
+</style>

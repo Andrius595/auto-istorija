@@ -39,6 +39,7 @@ use App\Actions\User\Car\ShowUserCarRecords;
 use App\Actions\User\CreateUser;
 use App\Actions\User\DeleteUser;
 use App\Actions\User\EditUser;
+use App\Actions\User\IndexUsers;
 use App\Actions\User\ListUsers;
 use App\Actions\User\ShowUser;
 use Illuminate\Http\Request;
@@ -113,6 +114,7 @@ Route::group(['middleware' => ['api', 'auth:api']], static function() {
 
     Route::group(['prefix' => 'users'], static function () {
         Route::get('/', ListUsers::class);
+        Route::get('/index', IndexUsers::class);
         Route::post('/', CreateUser::class);
         Route::put('/{user}', EditUser::class);
         Route::get('/{user}', ShowUser::class);

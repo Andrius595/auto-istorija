@@ -1,28 +1,29 @@
 <template>
   <v-container>
-    <div></div>
-<!--    <template v-if="true">-->
-<!--      <template v-if="isClient()">-->
-<!--&lt;!&ndash;        <UserCarsTable :user-id="auth.data.value.user.id" />&ndash;&gt;-->
-<!--      </template>-->
-<!--      <template v-else-if="isServiceEmployee()">-->
-<!--&lt;!&ndash;        <ServiceCarsTable :service-id="auth.data.value.user.service_id" />&ndash;&gt;-->
-<!--      </template>-->
-<!--      <template v-else-if="isSystemAdmin()">-->
+    <template v-if="true">
+      <template v-if="isClient">
+        <UserCarsTable :user-id="user.id" />
+      </template>
+      <template v-else-if="isServiceEmployee">
+        <ServiceCarsTable :service-id="user.service_id as number" />
+      </template>
+      <template v-else-if="isSystemAdmin">
         <CarsTable />
-<!--      </template>-->
-<!--    </template>-->
-
+      </template>
+    </template>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import {useJWT} from "~/composables/useJWT";
-import {definePageMeta} from "#imports";
+import UserCarsTable from "~/components/Car/Tables/UserCarsTable.vue";
+import ServiceCarsTable from "~/components/Car/Tables/ServiceCarsTable.vue";
+import CarsTable from "~/components/Car/Tables/CarsTable.vue";
 
+const { isClient, isServiceEmployee, isSystemAdmin } = useRoles()
+const auth = useAuth()
 
-// const token = useCookie('token')
-// const {isClient, isServiceEmployee, isSystemAdmin} = useRoles()
+const user = await auth.getUser()
+
 
 definePageMeta({
   middleware: ['auth'],
