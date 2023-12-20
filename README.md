@@ -102,4 +102,5 @@ Redaguoti automobilį modalas mobiliajame telefone:
 ![Redaguoti automobilį modalas mobiliajame telefone](./edit_car_modal_mobile.png "Redaguoti automobilį modalas mobiliajame telefone")
 
 Navigacija mobiliajame telefone:
+
 ![Navigacija mobiliajame telefone](./mobile_navigation.png "Navigacija mobiliajame telefone")
